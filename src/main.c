@@ -1,39 +1,70 @@
-// Esse programa de expemplo printa "Hello World!" no LOG no momento em que o led pisca
+#include <inttypes.h>
+#include <stddef.h>
+#include <stdint.h>
 
-#include "zephyr/device.h"
-#include "zephyr/sys/printk.h"
-#include <zephyr/logging/log.h>
-#include <zephyr/drivers/gpio.h>
+#include <zephyr/device.h>
+#include <zephyr/devicetree.h>
+#include <zephyr/drivers/adc.h>
 #include <zephyr/kernel.h>
+#include <zephyr/sys/printk.h>
+#include <zephyr/sys/util.h>
+#include <zephyr/logging/log.h>
+
+#if !DT_NODE_EXISTS(DT_PATH(zephyr_user)) || \
+	!DT_NODE_HAS_PROP(DT_PATH(zephyr_user), io_channels)
+#error "No suitable devicetree overlay specified"
+#endif
+
+const struct adc_dt_spec adc_channel = ADC_DT_SPEC_GET_BY_IDX(DT_PATH(zephyr_user), 0);
 
 LOG_MODULE_REGISTER();
-
-const struct gpio_dt_spec *const led = &(const struct gpio_dt_spec)GPIO_DT_SPEC_GET(DT_NODELABEL(led0), gpios);
-
 int main(){
   LOG_INF("Inicializando");
 
-  if(!device_is_ready(led->port)){
-    LOG_ERR("Led não está funcinando");
-  }
+  int err;
+	uint16_t buf;
+	struct adc_sequence sequence = {
+        .buffer = &buf,
+        /* buffer size in bytes, not number of samples */
+        .buffer_size = sizeof(buf),
+      };
 
-  gpio_pin_configure_dt(led, GPIO_OUTPUT_ACTIVE);
-  
-  // Note que o log do programa em execução acontece os dois de uma
-  // vez, isso ocorre porque ele é assícrono
-  // Por isso tome cuidado com essas funções
-  // WARNING: nunca deixe o while(true) vazio, deixe pelo menos um k_msleep(1)
-  // dentro dele
+    if (!adc_is_ready_dt(&adc_channel)) {
+			printk("ADC controller device not ready\n");
+			return 0;
+    }
   while (true) {
-    printk("Led aceso\n");
-    gpio_pin_set_dt(led, 1);
 
-    // Além do LOG, temos o printk
+    printk("ADC reading");
 
-    k_msleep(1000);
+    int32_t val_mv;
 
-    printk("Led apagado\n");
-    gpio_pin_set_dt(led, 0);
-    k_msleep(1000);
-  }
+    (void)adc_sequence_init_dt(&adc_channel, &sequence);
+
+    err = adc_read_dt(&adc_channel, &sequence);
+			if (err < 0) {
+				printk("Could not read (%d)\n", err);
+				continue;
+    }
+
+    if (adc_channel.channel_cfg.differential) {
+            val_mv = (int32_t)((int16_t)buf);
+        } else {
+            val_mv = (int32_t)buf;
+        }
+
+    printk("%"PRId32, val_mv);
+
+    /* Converte o valor em milivolts*/
+        err = adc_raw_to_millivolts_dt(&adc_channel, &val_mv);
+        if (err < 0) {
+            printk(" (value in mV not available)\n");
+        } else {
+            printk(" = %"PRId32" mV\n", val_mv);
+        }
+
+        /* Espera 1 segundo antes da próxima leitura */
+        k_sleep(K_MSEC(1000));
+    }
+    return 0;
 }
