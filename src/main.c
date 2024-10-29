@@ -1,3 +1,5 @@
+// TODO: Ainda falta fazer a parte do transistor
+
 #include "bateria.h"
 #include "zephyr/kernel.h"
 #include "zephyr/logging/log.h"
