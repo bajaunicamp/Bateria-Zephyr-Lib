@@ -3,8 +3,8 @@
 #include <zephyr/device.h>
 #include <zephyr/drivers/adc.h>
 #include <zephyr/drivers/gpio.h>
-#include <zephyr/logging/log.h>
 #include <zephyr/kernel.h>
+#include <zephyr/logging/log.h>
 
 // Esse código foi altamente inspirado no código de sample do zephyr
 
@@ -24,11 +24,26 @@ struct adc_sequence sequence = {
 int bateria_init() {
   LOG_INF("Inicializando...");
 
-  int err = adc_is_ready_dt(&bateria_adc_channel);
+  int err;
+  err = adc_is_ready_dt(&bateria_adc_channel);
   if (err < 0) {
     LOG_ERR("ADC não está pronto");
     return err;
   }
+
+  err = device_is_ready(transistor->port);
+  if (err < 0) {
+    LOG_ERR("A porta do pino do transistor não está pronta");
+    return err;
+  }
+
+  err = gpio_pin_configure_dt(transistor, GPIO_OUTPUT);
+  if (err < 0) {
+    LOG_ERR("Não foi possível configurar o pino do transistor como output (%d)",
+            err);
+    return err;
+  }
+
   return 0;
 }
 
@@ -37,12 +52,6 @@ uint32_t bateria_read() {
 
   // Vamos habilitar o circuito ativando o transistor
   LOG_INF("Ativando o circuito de leitura da bateria");
-
-  err = device_is_ready(transistor->port);
-  if (err < 0) {
-    LOG_ERR("A porta do pino do transistor não está pronta");
-    return err;
-  }
 
   err = gpio_pin_set_dt(transistor, 1);
   if (err < 0) {
