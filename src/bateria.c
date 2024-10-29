@@ -1,12 +1,10 @@
 #include <bateria.h>
 
 #include <zephyr/device.h>
-#include <zephyr/devicetree.h>
 #include <zephyr/drivers/adc.h>
-#include <zephyr/kernel.h>
-#include <zephyr/logging/log.h>
-#include <zephyr/sys/util.h>
 #include <zephyr/drivers/gpio.h>
+#include <zephyr/logging/log.h>
+#include <zephyr/kernel.h>
 
 // Esse código foi altamente inspirado no código de sample do zephyr
 
