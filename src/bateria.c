@@ -15,7 +15,7 @@ const struct gpio_dt_spec *transistor =
 const struct adc_dt_spec bateria_adc_channel =
     ADC_DT_SPEC_GET_BY_IDX(DT_PATH(zephyr_user), 0);
 static uint16_t buf;
-struct adc_sequence sequence = {
+static struct adc_sequence sequence = {
     .buffer = &buf,
     /* buffer size in bytes, not number of samples */
     .buffer_size = sizeof(buf),
