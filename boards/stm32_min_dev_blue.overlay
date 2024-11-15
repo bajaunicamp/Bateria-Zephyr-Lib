@@ -2,7 +2,7 @@
     zephyr,user {
        io-channels = <&adc1 0>; // Canal 0 = Pino A0
        io-channel-names = "A0";
-       gpios = <&gpioa 1 GPIO_ACTIVE_HIGH>;
+       gpios = <&gpioa 1 GPIO_ACTIVE_HIGH>; // Pino do Transistor
     };
 };
 
