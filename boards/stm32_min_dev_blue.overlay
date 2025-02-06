@@ -1,6 +1,6 @@
 / {
     zephyr,user {
-       io-channels = <&adc1 1>; // Canal 0 = Pino A0
+       io-channels = <&adc1 1>; // Canal 1 = Pino A1
        io-channel-names = "A1";
        gpios = <&gpioa 0 GPIO_ACTIVE_HIGH>;
     };
