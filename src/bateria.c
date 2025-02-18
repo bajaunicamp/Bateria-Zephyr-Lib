@@ -94,5 +94,5 @@ uint32_t bateria_read() {
     return err;
   }
 
-  return val_mv;
+  return val_mv*calibration_factor;
 }
