@@ -16,3 +16,5 @@ Por exemplo, se você quiser utilizar o pino A0, então a partir desse arquivo v
 Este esquemático utiliza um Transistor NPN, mas um PNP pode ser utilizado (lembre-se de modificar o circuito de acordo).
 
 O Colector recebe 12V, que são passados para o Emitter caso a Base receba 5V. O botão é utilizado para calibrar o Trimpot, e o STM deve ser desconectado ao fazer isto.
+
+A tensão da bateria sai do pino do meio do trimpot. Ele deve ser no máximo 3.3V, pois é o que o STM aguenta
