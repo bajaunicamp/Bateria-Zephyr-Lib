@@ -1,0 +1,75 @@
+\doxysection{Referência do Arquivo inc/bateria.h}
+\hypertarget{bateria_8h}{}\label{bateria_8h}\index{inc/bateria.h@{inc/bateria.h}}
+
+
+Biblioteca para a utilização de um sensor de tensão.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+\doxysubsubsection*{Funções}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{bateria_8h_ae9581cb0da3f02a58b50d52dc900ec2d}{bateria\+\_\+init}} ()
+\begin{DoxyCompactList}\small\item\em Inicializa o Analog to Digital Converter (ADC), e os pinos do adc e da base do transistor. \end{DoxyCompactList}\item 
+uint32\+\_\+t \mbox{\hyperlink{bateria_8h_a7e09724eb08becd1afb1197a90321adc}{bateria\+\_\+read}} ()
+\begin{DoxyCompactList}\small\item\em Ativa o transistor, espera alguns milisegundos e em seguida lê os sinal do trimpot que indica a tensão. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variáveis}
+\begin{DoxyCompactItemize}
+\item 
+const double \mbox{\hyperlink{bateria_8h_aeb42551f6fbb389586ef983b0c811c34}{calibration\+\_\+factor}} = 1
+\begin{DoxyCompactList}\small\item\em Valor multiplicado ao valor do {\ttfamily \doxylink{bateria_8h_a7e09724eb08becd1afb1197a90321adc}{bateria\+\_\+read()}} para transformá-\/lo de max 3.\+3V para max 12V. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descrição detalhada}
+Biblioteca para a utilização de um sensor de tensão. 
+
+Este arquivo contém as definições e funções necessárias para inicializar e ler dados do sensor de tensão desenvolvido pela equipe UNICAMP Baja SAE
+
+\begin{DoxyAuthor}{Autor}
+Giancarlo Bonvenuto e Matheus Cunha 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Funções}
+\Hypertarget{bateria_8h_ae9581cb0da3f02a58b50d52dc900ec2d}\index{bateria.h@{bateria.h}!bateria\_init@{bateria\_init}}
+\index{bateria\_init@{bateria\_init}!bateria.h@{bateria.h}}
+\doxysubsubsection{\texorpdfstring{bateria\_init()}{bateria\_init()}}
+{\footnotesize\ttfamily \label{bateria_8h_ae9581cb0da3f02a58b50d52dc900ec2d} 
+int bateria\+\_\+init (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Inicializa o Analog to Digital Converter (ADC), e os pinos do adc e da base do transistor. 
+
+Deve ser chamado antes de qualquer função dessa biblioteca \Hypertarget{bateria_8h_a7e09724eb08becd1afb1197a90321adc}\index{bateria.h@{bateria.h}!bateria\_read@{bateria\_read}}
+\index{bateria\_read@{bateria\_read}!bateria.h@{bateria.h}}
+\doxysubsubsection{\texorpdfstring{bateria\_read()}{bateria\_read()}}
+{\footnotesize\ttfamily \label{bateria_8h_a7e09724eb08becd1afb1197a90321adc} 
+uint32\+\_\+t bateria\+\_\+read (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Ativa o transistor, espera alguns milisegundos e em seguida lê os sinal do trimpot que indica a tensão. 
+
+E por fim desativa o transitor.
+
+\begin{DoxyReturn}{Retorna}
+
+\begin{DoxyItemize}
+\item {\ttfamily \texorpdfstring{$>$}{>}= 0}\+: caso a leitura seja bem-\/sucedida. O valor é retornado em milivolts
+\item {\ttfamily \texorpdfstring{$<$}{<} 0}\+: retorna o erro que ocorreu em alguma das funções executadas 
+\end{DoxyItemize}
+\end{DoxyReturn}
+
+
+\doxysubsection{Variáveis}
+\Hypertarget{bateria_8h_aeb42551f6fbb389586ef983b0c811c34}\index{bateria.h@{bateria.h}!calibration\_factor@{calibration\_factor}}
+\index{calibration\_factor@{calibration\_factor}!bateria.h@{bateria.h}}
+\doxysubsubsection{\texorpdfstring{calibration\_factor}{calibration\_factor}}
+{\footnotesize\ttfamily \label{bateria_8h_aeb42551f6fbb389586ef983b0c811c34} 
+const double calibration\+\_\+factor = 1}
+
+
+
+Valor multiplicado ao valor do {\ttfamily \doxylink{bateria_8h_a7e09724eb08becd1afb1197a90321adc}{bateria\+\_\+read()}} para transformá-\/lo de max 3.\+3V para max 12V. 
+

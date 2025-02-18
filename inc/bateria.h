@@ -6,7 +6,7 @@
  * @brief Biblioteca para a utilização de um sensor de tensão.
  *
  * Este arquivo contém as definições e funções necessárias para inicializar 
- * e ler dados do sensor de tensão desenvolvido pela equipe UNICAP Baja SAE
+ * e ler dados do sensor de tensão desenvolvido pela equipe UNICAMP Baja SAE
  *
  * @author Giancarlo Bonvenuto e Matheus Cunha
  */
