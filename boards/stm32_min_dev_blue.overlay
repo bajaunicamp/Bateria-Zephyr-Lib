@@ -2,7 +2,7 @@
     zephyr,user {
        io-channels = <&adc1 1>; // Canal 1 = Pino A1
        io-channel-names = "A1";
-       gpios = <&gpioa 0 GPIO_ACTIVE_HIGH>;
+       gpios = <&gpioa 0 GPIO_ACTIVE_HIGH>;	// Pino que controla a base do transistor
     };
 };
 
@@ -11,7 +11,7 @@
 	#size-cells = <0>;
 
 	channel@0 {
-		reg = <0>;
+		reg = <1>;	// Este valor deve ser alterado junto com o pino
 		zephyr,gain = "ADC_GAIN_1";
 		zephyr,reference = "ADC_REF_INTERNAL";
 		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;

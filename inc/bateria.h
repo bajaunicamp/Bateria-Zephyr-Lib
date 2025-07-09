@@ -16,7 +16,7 @@
  * @brief Valor multiplicado ao valor do `bateria_read()` para transformá-lo de
  * max 3.3V para max 12V
  */
-const double calibration_factor = 1;
+static const double calibration_factor = 1;
 
 /**
  * @brief Inicializa o Analog to Digital Converter (ADC), e os pinos do adc e da
